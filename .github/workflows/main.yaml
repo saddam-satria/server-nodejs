@@ -1,0 +1,26 @@
+name: 'Server Node JS'
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 14.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set Up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: install dependencies
+        run: yarn install
+
+      - name: testing
+        run: yarn test
